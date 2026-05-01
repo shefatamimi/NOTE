@@ -41,5 +41,7 @@ class NoteService {
     final id = await db.delete('nots', where: 'id = ?', whereArgs: [notemodels.id]);
     return id;
   }
+
+
 }
 

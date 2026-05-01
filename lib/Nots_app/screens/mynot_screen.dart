@@ -3,6 +3,7 @@ import 'package:note/Nots_app/screens/addnotes.dart';
 import 'package:note/Nots_app/screens/single note.dart';
 import '../models/note_models.dart';
 import '../service/note_service.dart';
+import 'Fav_Note.dart';
 import 'edit_notscreen.dart';
 
 class MyNote extends StatefulWidget {
@@ -14,11 +15,21 @@ class MyNote extends StatefulWidget {
 
 class _MyNoteState extends State<MyNote> {
   final List<NoteModels> notes = [];
+  late var star_icon_color=Colors.grey;
+
+
+
 
   @override
   void initState() {
     super.initState();
     loadNotes();
+  }
+ Future<void>Changecolor(NoteModels note) async {
+    setState(() {
+      note.isFavorite = !note.isFavorite;
+    });
+    await NoteService().updateNots(note);
   }
 
   Future<void> loadNotes() async {
@@ -61,11 +72,29 @@ class _MyNoteState extends State<MyNote> {
       ),
 
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FavNote(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.favorite),
+          )
+
+        ],
         title: const Text('My Notes'),
         backgroundColor: Colors.teal,
+
+
       ),
 
-      body: Card(
+      body:
+      Card(
+        margin: const EdgeInsets.all(16),
         child: ListView.separated(
           padding: const EdgeInsets.all(16),
           itemCount: notes.length,
@@ -117,10 +146,14 @@ class _MyNoteState extends State<MyNote> {
 
                   children: [
                     IconButton(
+                      icon: Icon(Icons.favorite,color: note.isFavorite?Colors.red:Colors.grey,),
+                      onPressed: () => Changecolor(note),
+
+                    ),
+                    IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () async {
                         final result = await Navigator.push(
-
                           context,
                           MaterialPageRoute(
                             builder: (_) => EditNot(note: note),
@@ -137,10 +170,10 @@ class _MyNoteState extends State<MyNote> {
                       icon: const Icon(Icons.delete),
                       onPressed: () => deleteNote(note),
                     ),
+
                   ],
+
                 ),
-
-
               ],
 
             );

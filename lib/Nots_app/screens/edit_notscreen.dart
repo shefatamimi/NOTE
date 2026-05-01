@@ -31,6 +31,7 @@ class _EditNotState extends State<EditNot> {
       description: descriptionController.text,
       date: selectedDate,
       isCompleted: widget.note.isCompleted,
+      isFavorite: widget.note.isFavorite,
     );
 
     await NoteService().updateNots(updated);

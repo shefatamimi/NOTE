@@ -29,7 +29,8 @@ class DatabaseHelper {
       title TEXT,
       description TEXT,
       isCompleted INTEGER,
-      date TEXT
+      date TEXT,
+      isFavorite INTEGER
       )
     ''');
     await db.execute('''

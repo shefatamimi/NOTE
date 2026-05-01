@@ -4,6 +4,7 @@ class NoteModels {
   String description;
   DateTime? date;
   bool isCompleted;
+  bool isFavorite;
 
   NoteModels({
     this.id,
@@ -11,6 +12,8 @@ class NoteModels {
     required this.description,
     required this.isCompleted,
     this.date,
+    this.isFavorite=false,
+
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +23,7 @@ class NoteModels {
       'description': description,
       'isCompleted': isCompleted ? 1 : 0,
       'date': date?.toIso8601String(),
+      'isFavorite': isFavorite ? 1 : 0,
     };
   }
 
@@ -32,6 +36,8 @@ class NoteModels {
       date: map['date'] != null
           ? DateTime.parse(map['date'])
           : null,
+      isFavorite: map['isFavorite'] == 1,
+
     );
   }
 }
