@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note/Nots_app/screens/Login_Screen.dart';
-import 'package:note/Nots_app/screens/regester_screen.dart';
+import 'package:note/Nots_app/screens/Regester_Screen.dart';
 
 void main() {
   runApp(const MyApp());

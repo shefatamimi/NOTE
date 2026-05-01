@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note/Nots_app/screens/regester_screen.dart';
+import 'package:note/Nots_app/screens/Regester_Screen.dart';
 import '../service/Login_Service.dart';
 import 'Mynot_Screen.dart';
 
