@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note/Nots_app/screens/regester_screen.dart';
 import '../service/Login_Service.dart';
-import 'mynot_screen.dart';
+import 'Mynot_Screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.title, required this.email, required this.password});
