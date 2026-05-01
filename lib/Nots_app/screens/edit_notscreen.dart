@@ -46,72 +46,75 @@ class _EditNotState extends State<EditNot> {
         backgroundColor: Colors.teal,
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: titleController,
-                decoration: const InputDecoration(hintText: 'Title',
-                  contentPadding: EdgeInsets.all(16),
-                  enabledBorder: OutlineInputBorder(
+      body:
+      SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(hintText: 'Title',
+                    contentPadding: EdgeInsets.all(16),
+                    enabledBorder: OutlineInputBorder(
+                    ),
+                    border: OutlineInputBorder(
+
+
+                    ),
                   ),
-                  border: OutlineInputBorder(
 
-
-                  ),
-                ),
-
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            TextField(
-              controller: descriptionController,
-              maxLines: 18,
-              decoration: const InputDecoration(hintText: 'Description'),
-
-            ),
-
-            const SizedBox(height: 20),
-
-            InkWell(
-              onTap: () async {
-                final picked = await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate,
-                  firstDate: DateTime(2015),
-                  lastDate: DateTime(2101),
-                );
-
-                if (picked != null) {
-                  setState(() {
-                    selectedDate = picked;
-                  });
-                }
-              },
-              child: Text(
-                '📅 ${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-              ),
-            ),
-
-            const SizedBox(height: 25),
-
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(150, 50),
-                backgroundColor: Colors.teal,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: updateNote,
-              child: const Text("Update",style: TextStyle(color: Colors.white),),
-            ),
-          ],
+
+              const SizedBox(height: 20),
+
+              TextField(
+                controller: descriptionController,
+                maxLines: 18,
+                decoration: const InputDecoration(hintText: 'Description'),
+
+              ),
+
+              const SizedBox(height: 20),
+
+              InkWell(
+                onTap: () async {
+                  final picked = await showDatePicker(
+                    context: context,
+                    initialDate: selectedDate,
+                    firstDate: DateTime(2015),
+                    lastDate: DateTime(2101),
+                  );
+
+                  if (picked != null) {
+                    setState(() {
+                      selectedDate = picked;
+                    });
+                  }
+                },
+                child: Text(
+                  '📅 ${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                ),
+              ),
+
+              const SizedBox(height: 25),
+
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(150, 50),
+                  backgroundColor: Colors.teal,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: updateNote,
+                child: const Text("Update",style: TextStyle(color: Colors.white),),
+              ),
+            ],
+          ),
         ),
       ),
     );

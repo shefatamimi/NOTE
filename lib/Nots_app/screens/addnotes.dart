@@ -69,50 +69,54 @@ class _AddnotesState extends State<Addnotes> {
         backgroundColor: Colors.teal,
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
+      body:
+      SingleChildScrollView(
 
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(hintText: 'Title'),
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
 
-            const SizedBox(height: 20),
-
-            TextField(
-              controller: descriptionController,
-              maxLines: 19,
-              decoration: const InputDecoration(hintText: 'Description',
+              TextField(
+                controller: titleController,
+                decoration: const InputDecoration(hintText: 'Title'),
               ),
-            ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            InkWell(
-              onTap: () => _selectDate(context),
-              child: Text(
-                '📅 ${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-              ),
-            ),
-
-            const SizedBox(height: 25),
-
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(150, 50),
-                backgroundColor: Colors.teal,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+              TextField(
+                controller: descriptionController,
+                maxLines: 19,
+                decoration: const InputDecoration(hintText: 'Description',
                 ),
               ),
-              onPressed: saveNote,
-              child: const Text('Save',style: TextStyle(color: Colors.white),
 
+              const SizedBox(height: 20),
+
+              InkWell(
+                onTap: () => _selectDate(context),
+                child: Text(
+                  '📅 ${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                ),
               ),
-            ),
-          ],
+
+              const SizedBox(height: 25),
+
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(150, 50),
+                  backgroundColor: Colors.teal,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: saveNote,
+                child: const Text('Save',style: TextStyle(color: Colors.white),
+
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

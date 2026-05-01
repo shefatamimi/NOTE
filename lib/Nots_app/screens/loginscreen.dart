@@ -54,141 +54,141 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: SafeArea(
-        child: Center(
-          key: Key('loginScreenKey'),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Login Her !',style: TextStyle(
-                fontSize: 40,
-                color: Colors.teal,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(1, 1),
-                      blurRadius: 2,
-                      color: Colors.black,
-                    ),
-                  ],
+      body:
+      SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 190),
 
-                fontWeight: FontWeight.bold
-              ),
-          ),
-
-
-              const SizedBox(height: 20),
-              const Text("Your Ideas Are Waiting 📝"),
-
-              const SizedBox(height: 70),
-
-              // email
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
+            Text('Login Her !',style: TextStyle(
+              fontSize: 40,
+              color: Colors.teal,
+                shadows: [
+                  Shadow(
+                    offset: Offset(1, 1),
+                    blurRadius: 2,
+                    color: Colors.black,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TextField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Email',
-                      ),
+                ],
+
+              fontWeight: FontWeight.bold
+            ),
+        ),
+
+
+            const SizedBox(height: 20),
+            const Text("Your Ideas Are Waiting 📝"),
+
+            const SizedBox(height: 70),
+
+            // email
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Email',
                     ),
                   ),
                 ),
               ),
+            ),
 
-              const SizedBox(height: 25),
+            const SizedBox(height: 25),
 
-              // password
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TextField(
-                      controller: passController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Password',
-                      ),
+            // password
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: passController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Password',
                     ),
                   ),
                 ),
               ),
+            ),
 
-              const SizedBox(height: 50),
+            const SizedBox(height: 50),
 
-              // button
-              ElevatedButton(
-                key: Key('loginButtonKey'),
-                style: ElevatedButton.styleFrom(
+            // button
+            ElevatedButton(
+              key: Key('loginButtonKey'),
+              style: ElevatedButton.styleFrom(
 
-                  minimumSize: Size(200, 50),
-                  backgroundColor: Colors.teal,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                minimumSize: Size(200, 50),
+                backgroundColor: Colors.teal,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
 
-                ), onPressed: () async {
-                  if (emailController.text.isEmpty || passController.text.isEmpty)  {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please fill in all fields'),
-                          ),);
-                    return;
-                  }
-                  bool loginSuccess = await login();
-                  if (loginSuccess) {
-
+              ), onPressed: () async {
+                if (emailController.text.isEmpty || passController.text.isEmpty)  {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Login successful'),
-                    ),);}
-              }, child: const Text('Sign In',style: TextStyle(
-                color: Colors.black87,
-                fontSize: 20
-              ),),
+                      content: Text('Please fill in all fields'),
+                        ),);
+                  return;
+                }
+                bool loginSuccess = await login();
+                if (loginSuccess) {
 
-              ),
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Login successful'),
+                  ),);}
+            }, child: const Text('Sign In',style: TextStyle(
+              color: Colors.black87,
+              fontSize: 20
+            ),),
+
+            ),
 
 
-              const SizedBox(height: 50),
+            const SizedBox(height: 50),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Not yet a member? ',style: TextStyle(color: Colors.black38,fontSize: 15),),
-                  InkWell(child: const Text('sign up now',
-                      style: TextStyle(color: Colors.black87,fontSize: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Not yet a member? ',style: TextStyle(color: Colors.black38,fontSize: 15),),
+                InkWell(child: const Text('sign up now',
+                    style: TextStyle(color: Colors.black87,fontSize: 15),
 
-                  ),
-                    onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegesterScreen(
-                          email: emailController.text,
-                          password: passController.text,
-                          confirmPassword: passController.text,
-                      )
-                    ),);
-                    }
-                  ),
+                ),
+                  onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegesterScreen(
+                        email: emailController.text,
+                        password: passController.text,
+                        confirmPassword: passController.text,
+                    )
+                  ),);
+                  }
+                ),
 
-                ],
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );
