@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note/Nots_app/screens/single%20note.dart';
+import 'package:note/Nots_app/screens/Single_Note.dart';
 
 import '../models/note_models.dart';
 import '../service/note_service.dart';

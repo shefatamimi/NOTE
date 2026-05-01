@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:note/Nots_app/screens/addnotes.dart';
-import 'package:note/Nots_app/screens/single note.dart';
+import 'package:note/Nots_app/screens/Add_Not.dart';
+import 'package:note/Nots_app/screens/Single_Note.dart';
 import '../models/note_models.dart';
 import '../service/note_service.dart';
 import 'Fav_Note.dart';
-import 'edit_notscreen.dart';
+import 'Edit_Not_Screen.dart';
 
 class MyNote extends StatefulWidget {
   const MyNote({super.key});

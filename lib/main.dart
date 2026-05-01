@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note/Nots_app/screens/loginscreen.dart';
+import 'package:note/Nots_app/screens/Login_Screen.dart';
 import 'package:note/Nots_app/screens/regester_screen.dart';
 
 void main() {
