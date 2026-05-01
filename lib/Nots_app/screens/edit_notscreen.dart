@@ -50,18 +50,30 @@ class _EditNotState extends State<EditNot> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: titleController,
+                decoration: const InputDecoration(hintText: 'Title',
+                  contentPadding: EdgeInsets.all(16),
+                  enabledBorder: OutlineInputBorder(
+                  ),
+                  border: OutlineInputBorder(
 
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(hintText: 'Title'),
+
+                  ),
+                ),
+
+              ),
             ),
 
             const SizedBox(height: 20),
 
             TextField(
               controller: descriptionController,
-              maxLines: 5,
+              maxLines: 18,
               decoration: const InputDecoration(hintText: 'Description'),
+
             ),
 
             const SizedBox(height: 20),
@@ -86,11 +98,18 @@ class _EditNotState extends State<EditNot> {
               ),
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 25),
 
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(150, 50),
+                backgroundColor: Colors.teal,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               onPressed: updateNote,
-              child: const Text("Update"),
+              child: const Text("Update",style: TextStyle(color: Colors.white),),
             ),
           ],
         ),

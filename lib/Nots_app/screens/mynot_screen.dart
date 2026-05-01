@@ -65,50 +65,57 @@ class _MyNoteState extends State<MyNote> {
         backgroundColor: Colors.teal,
       ),
 
-      body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: notes.length,
+      body: Card(
+        child: ListView.separated(
+          padding: const EdgeInsets.all(16),
+          itemCount: notes.length,
 
-        separatorBuilder: (_, __) =>
-        const Divider(color: Colors.grey),
+          separatorBuilder: (_, __) =>
+          const Divider(color: Colors.grey),
 
-        itemBuilder: (context, index) {
-          final note = notes[index];
+          itemBuilder: (context, index) {
+            final note = notes[index];
 
-          return Column(
-            children: [
-              ListTile(
-                title: Text(
-                  note.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+            return Column(
+              children: [
+                Text(
+                  note.date != null
+                      ? "${note.date!.day}/${note.date!.month}/${note.date!.year}"
+                      : "",
+                  style: const TextStyle(fontSize: 12, color: Colors.grey,),
                 ),
-
-                subtitle: Text(note.description),
-
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => SingleNote(
-                        title: note.title,
-                        description: note.description,
-                        selectedDate: note.date ?? DateTime.now(),
+                ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      note.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  subtitle: Text(note.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => SingleNote(
+                          title: note.title,
+                          description: note.description,
+                          selectedDate: note.date ?? DateTime.now(),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      note.date != null
-                          ? "${note.date!.day}/${note.date!.month}/${note.date!.year}"
-                          : "",
-                      style: const TextStyle(fontSize: 12, color: Colors.grey,),
-                    ),
+                    );
+                  },
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
 
+                  children: [
                     IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () async {
@@ -132,10 +139,13 @@ class _MyNoteState extends State<MyNote> {
                     ),
                   ],
                 ),
-              ),
-            ],
-          );
-        },
+
+
+              ],
+
+            );
+          },
+        ),
       ),
     );
   }

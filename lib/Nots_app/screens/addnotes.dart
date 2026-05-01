@@ -83,8 +83,9 @@ class _AddnotesState extends State<Addnotes> {
 
             TextField(
               controller: descriptionController,
-              maxLines: 5,
-              decoration: const InputDecoration(hintText: 'Description'),
+              maxLines: 19,
+              decoration: const InputDecoration(hintText: 'Description',
+              ),
             ),
 
             const SizedBox(height: 20),
@@ -96,11 +97,20 @@ class _AddnotesState extends State<Addnotes> {
               ),
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 25),
 
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(150, 50),
+                backgroundColor: Colors.teal,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               onPressed: saveNote,
-              child: const Text('Save'),
+              child: const Text('Save',style: TextStyle(color: Colors.white),
+
+              ),
             ),
           ],
         ),

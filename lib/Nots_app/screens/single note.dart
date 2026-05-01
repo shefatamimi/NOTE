@@ -25,25 +25,37 @@ class _SingleNoteState extends State<SingleNote> {
           },
           icon: Icon(Icons.arrow_back),
         ),
+
         title: Text('My Notes'),
         centerTitle: true,
         backgroundColor: Colors.teal,
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Text('${widget.title}'),
-          Text('${widget.description}'),
-          Text('${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}'),
-          SizedBox(height: 100,),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SizedBox(height: 10,),
+            Text('${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}',
+              style: TextStyle(color: Colors.black54,fontSize: 15),),
+            SizedBox(height: 10,),
+            Text('${widget.title}',style:
+            TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+            SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('${widget.description}'),
+            ),
 
 
 
-        ]
+
+          ]
 
 
 
+        ),
       )
 
 
