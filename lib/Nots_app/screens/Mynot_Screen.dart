@@ -74,15 +74,12 @@ class _MyNoteState extends State<MyNote> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const FavNote(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.favorite),
+            onPressed: () {},
+
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const Icon(Icons.search,size: 27,),
+            ),
           )
 
         ],

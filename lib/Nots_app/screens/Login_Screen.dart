@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:note/Nots_app/screens/Regester_Screen.dart';
+import 'package:note/Nots_app/screens/home_screen.dart';
 import '../service/Login_Service.dart';
-import 'Mynot_Screen.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.title, required this.email, required this.password});
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MyNote(),
+          builder: (context) => const HomeScreen(),
         ),
       );
       return true;
@@ -150,11 +151,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
                 bool loginSuccess = await login();
                 if (loginSuccess) {
-
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Login successful'),
-                  ),);}
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
+                }
             }, child: const Text('Sign In',style: TextStyle(
               color: Colors.black87,
               fontSize: 20
