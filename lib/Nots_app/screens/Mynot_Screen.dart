@@ -25,7 +25,7 @@ class _MyNoteState extends State<MyNote> {
     super.initState();
     loadNotes();
   }
- Future<void>Changecolor(NoteModels note) async {
+  Future<void>Changecolor(NoteModels note) async {
     setState(() {
       note.isFavorite = !note.isFavorite;
     });
@@ -66,7 +66,7 @@ class _MyNoteState extends State<MyNote> {
           );
 
           if (result != null) {
-             await loadNotes();
+            await loadNotes();
           }
         },
       ),
@@ -89,96 +89,93 @@ class _MyNoteState extends State<MyNote> {
         title: const Text('My Notes'),
         backgroundColor: Colors.teal,
 
-
       ),
 
       body:
-      Card(
-        margin: const EdgeInsets.all(16),
-        child: ListView.separated(
-          padding: const EdgeInsets.all(16),
-          itemCount: notes.length,
+      ListView.separated(
+        padding: const EdgeInsets.all(16),
+        itemCount: notes.length,
 
-          separatorBuilder: (_, __) =>
-          const Divider(color: Colors.grey),
+        separatorBuilder: (_, __) =>
+        const Divider(color: Colors.grey),
 
-          itemBuilder: (context, index) {
-            final note = notes[index];
+        itemBuilder: (context, index) {
+          final note = notes[index];
 
-            return Column(
-              children: [
-                Text(
-                  note.date != null
-                      ? "${note.date!.day}/${note.date!.month}/${note.date!.year}"
-                      : "",
-                  style: const TextStyle(fontSize: 12, color: Colors.grey,),
-                ),
-                ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(
-                      note.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  subtitle: Text(note.description,
-                    maxLines: 2,
+          return Column(
+            children: [
+              Text(
+                note.date != null
+                    ? "${note.date!.day}/${note.date!.month}/${note.date!.year}"
+                    : "",
+                style: const TextStyle(fontSize: 12, color: Colors.grey,),
+              ),
+              ListTile(
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    note.title,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SingleNote(
-                          title: note.title,
-                          description: note.description,
-                          selectedDate: note.date ?? DateTime.now(),
-                        ),
+                ),
+                subtitle: Text(note.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SingleNote(
+                        title: note.title,
+                        description: note.description,
+                        selectedDate: note.date ?? DateTime.now(),
                       ),
-                    );
-                  },
-                ),
-                SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.favorite,color: note.isFavorite?Colors.red:Colors.grey,),
-                      onPressed: () => Changecolor(note),
-
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () async {
-                        final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => EditNot(note: note),
-                          ),
-                        );
+                  );
+                },
+              ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
 
-                        if (result != null) {
-                          loadNotes();
-                        }
-                      },
-                    ),
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.favorite,color: note.isFavorite?Colors.red:Colors.grey,),
+                    onPressed: () => Changecolor(note),
 
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () => deleteNote(note),
-                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => EditNot(note: note),
+                        ),
+                      );
 
-                  ],
+                      if (result != null) {
+                        loadNotes();
+                      }
+                    },
+                  ),
 
-                ),
-              ],
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => deleteNote(note),
+                  ),
 
-            );
-          },
-        ),
+                ],
+
+              ),
+            ],
+
+          );
+        },
       ),
     );
   }
