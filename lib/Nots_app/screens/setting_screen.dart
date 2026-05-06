@@ -57,7 +57,7 @@ class _SettingScreenState extends State<SettingScreen> {
         
               Center(
                 child: Container(
-                  height: 70,
+                  height: 75,
                   width: 350,
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
@@ -80,13 +80,18 @@ class _SettingScreenState extends State<SettingScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Email :',style: TextStyle(
-                            fontSize: 17,
+                          Text('Welcome',style: TextStyle(
+                            fontSize: 19,
                             fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+
                           ),),
                           SizedBox(width: 8,),
-                          Text( '${widget.user.email}',style: TextStyle(
-                            fontSize: 16,
+                          Text( '${widget.user.email.split('@')[0]}',style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+
                           ),),
                           SizedBox(height: 20,),
         
@@ -434,8 +439,8 @@ class _SettingScreenState extends State<SettingScreen> {
                             ),),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Text('Newest First',style: TextStyle(
+                             padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Newest first',style: TextStyle(
                               fontSize: 10,
                             ),),
                           ),
@@ -546,7 +551,112 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ]
                     ),
-                    SizedBox(width: 130,),
+                    SizedBox(width: 120,),
+                    Icon(Icons.arrow_forward_ios,size: 20),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),       SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Other',style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.teal,
+                  fontWeight: FontWeight.bold
+              ),),
+            ),
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.info_outline,size: 30,),
+
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('About App',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Learn more about the app',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+                        ]
+                    ),
+                    SizedBox(width: 132,),
+                    Icon(Icons.arrow_forward_ios,size: 20),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.privacy_tip ,size: 30,),
+
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Privacy Policy',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Read our privacy policy',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+                        ]
+                    ),
+                    SizedBox(width: 143,),
                     Icon(Icons.arrow_forward_ios,size: 20),
                   ],
                 ),
