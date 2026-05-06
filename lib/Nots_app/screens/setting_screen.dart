@@ -14,6 +14,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  bool isDarkMode = false;
 
 
 
@@ -46,128 +47,522 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ),
       ),
-      body:Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-
-        children: [
-          SizedBox(height: 10,),
-
-
-            Center(
-              child: Container(
-                height: 90,
+      body:SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+        
+          children: [
+            SizedBox(height: 10,),
+        
+        
+              Center(
+                child: Container(
+                  height: 70,
+                  width: 350,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
+                  ),
+        
+                  child: Column(
+                    children: [
+                      SizedBox(height: 25,),
+        
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Email :',style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),),
+                          SizedBox(width: 8,),
+                          Text( '${widget.user.email}',style: TextStyle(
+                            fontSize: 16,
+                          ),),
+                          SizedBox(height: 20,),
+        
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+        
+                    ],
+                  ),
+        
+        
+        
+                          ),
+              ),
+        
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Account',style: TextStyle(
+                fontSize: 15,
+                color: Colors.teal,
+                fontWeight: FontWeight.bold
+              ),),
+            ),
+            SizedBox(height: 10,),
+          Center(
+            child: Container(
+                height: 50,
                 width: 350,
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3),
-                    ),
-
-                  ]
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
                 ),
-
-                child: Column(
-                  children: [
-                    SizedBox(height: 10),
-
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(width: 7,),
-                        Text('Email :',style: TextStyle(
-                          fontSize: 20,
+              child: Row(
+                children: [
+                  SizedBox(width: 10,),
+                  Icon(Icons.person,size: 30,),
+        
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10,),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text('Profile',style: TextStyle(
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
+        
+        
                         ),),
-                        SizedBox(width: 12,),
-                        Text( '${widget.user.email}',style: TextStyle(
-                          fontSize: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text('View and Edit your profile',style: TextStyle(
+                          fontSize: 10,
                         ),),
-                        SizedBox(height: 20,),
-
-                      ],
+                      ),
+        
+                    ]
+        
+        
+                  ),
+                  SizedBox(width: 137,),
+                  Icon(Icons.arrow_forward_ios,size: 20),
+                ],
+              ),
+            ),
+          ),
+        
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Appearence',style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.teal,
+                  fontWeight: FontWeight.bold
+              ),),
+            ),
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.dark_mode,size: 30,),
+        
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Dark Mode',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Enable dark mode',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+        
+                        ]
+        
+        
                     ),
-                    SizedBox(height: 20,),
-                    Row(
-                      children: [
-                        SizedBox(width: 20,),
-                        Text('Note :',style: TextStyle(
-                          fontSize: 20,
-
-                        ),),
-                        SizedBox(width: 12,),
-                        Text('10',style: TextStyle(
-                          fontSize: 20,
-                        ),),
-                        SizedBox(width: 90,),
-                        Text('Favorite :',style: TextStyle(
-                          fontSize: 20,
-
-                        ),),
-                        SizedBox(width: 12,),
-                        Text('10',style: TextStyle(
-                          fontSize: 20,
-                        ),),
-                        SizedBox(height: 20,),
-
-
-
-
-                      ],
+                    SizedBox(width: 130,),
+                    Switch(
+                      value: isDarkMode,
+                      onChanged: (value) {
+                        setState(() {
+                          isDarkMode = value;
+                        });
+                      },
                     ),
+        
                   ],
                 ),
-
-
-
-                        ),
-            ),
-
-          SizedBox(height: 20,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text('Account',style: TextStyle(
-              fontSize: 20,
-              color: Colors.teal,
-              fontWeight: FontWeight.bold
-            ),),
-          ),
-          SizedBox(height: 10,),
-        Center(
-          child: Container(
-              height: 50,
-              width: 350,
-              decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3),
-                    ),
-
-                  ]
+        
+        
               ),
-            child: Column(
-              children: [
-                SizedBox(height: 10,),
-
-                
-              ]
-
-
             ),
-          ),
-        )
-        ]
-
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.color_lens,size: 30,),
+        
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Theme Color',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+        
+        
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Choose a theme color',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+        
+                        ]
+        
+        
+                    ),
+                    SizedBox(width: 157,),
+                    Icon(Icons.arrow_forward_ios,size: 20),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.text_fields,size: 30,),
+        
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Font Size',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+        
+        
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Adjust the font size',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+        
+                        ]
+        
+        
+                    ),
+                    SizedBox(width: 170,),
+                    Icon(Icons.arrow_forward_ios,size: 20),
+                  ],
+                ),
+              ),
+            ),
+        
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Notes',style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.teal,
+                  fontWeight: FontWeight.bold
+              ),),
+            ),
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.favorite,size: 30,),
+        
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Favourites Setting',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Enable dark mode',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+                        ]
+                    ),
+                    SizedBox(width: 130,),
+                    Icon(Icons.arrow_forward_ios,size: 20),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.filter_list,size: 30,),
+        
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Notes Sorting',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Newest First',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+                        ]
+                    ),
+                    SizedBox(width: 160,),
+                    Icon(Icons.arrow_forward_ios,size: 20),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Data & Storage',style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.teal,
+                  fontWeight: FontWeight.bold
+              ),),
+            ),
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.cloud_circle,size: 30,),
+        
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Backup & Restore',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Backup your notes',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+                        ]
+                    ),
+                    SizedBox(width: 130,),
+                    Icon(Icons.arrow_forward_ios,size: 20),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
+            Center(
+              child: Container(
+                height: 50,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+        
+                    ]
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.delete,size: 30,),
+        
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Delete All Notes',style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text('Permanently delete all notes',style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                          ),
+                        ]
+                    ),
+                    SizedBox(width: 130,),
+                    Icon(Icons.arrow_forward_ios,size: 20),
+                  ],
+                ),
+              ),
+            ),
+        
+        
+        
+        
+        
+          ]
+        
+        
+        ),
       )
+
     );
   }
 }
