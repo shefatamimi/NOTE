@@ -94,16 +94,11 @@ class _SettingScreenState extends State<SettingScreen> {
 
                           ),),
                           SizedBox(height: 20,),
-        
                         ],
                       ),
                       SizedBox(height: 20,),
-        
                     ],
                   ),
-        
-        
-        
                           ),
               ),
         
