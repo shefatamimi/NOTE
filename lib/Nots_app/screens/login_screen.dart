@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:note/Nots_app/screens/Regester_Screen.dart';
+import 'package:note/Nots_app/screens/regester_screen.dart';
 import 'package:note/Nots_app/screens/home_screen.dart';
+import '../models/login_models.dart';
 import '../service/Login_Service.dart';
 
 
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => HomeScreen(user: login,),
         ),
       );
       return true;
@@ -154,7 +155,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
+                      builder: (context) =>  HomeScreen(
+                        user: LoginModels(
+                          email: emailController.text,
+                          password: passController.text,
+                        ),
+                      ),
                     ),
                   );
                 }

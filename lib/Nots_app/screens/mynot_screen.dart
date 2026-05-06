@@ -74,11 +74,16 @@ class _MyNoteState extends State<MyNote> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: NoteSearchDelegate(notes),
+              );
+            },
 
             icon: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: const Icon(Icons.search,size: 27,),
+              child: const Icon(Icons.search,size: 20,),
             ),
           )
 
@@ -174,6 +179,91 @@ class _MyNoteState extends State<MyNote> {
           );
         },
       ),
+    );
+  }
+}
+
+class NoteSearchDelegate extends SearchDelegate<NoteModels?> {
+  final List<NoteModels> notes;
+
+  NoteSearchDelegate(this.notes);
+// clear button
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+// arrow back button
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+// result of search
+  @override
+  Widget buildResults(BuildContext context) {
+    // not is  the element in the list notes(for loop for each element in the list)
+    // conditions for search results(if not contain the query)
+    // if conditon is true=> go to bulider list
+    final results = notes.where((note) {
+      return note.title.toLowerCase().contains(query.toLowerCase()) ||
+          note.description.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        final note = results[index];
+
+        return ListTile(
+          title: Text(note.title),
+          subtitle: Text(note.description),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => SingleNote(
+                  title: note.title,
+                  description: note.description,
+                  selectedDate: note.date ?? DateTime.now(),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestions = notes.where((note) {
+      return note.title.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    return ListView.builder(
+      itemCount: suggestions.length,
+      itemBuilder: (context, index) {
+        final note = suggestions[index];
+
+        return ListTile(
+          title: Text(note.title),
+          onTap: () {
+            query = note.title;
+            showResults(context);
+          },
+        );
+      },
     );
   }
 }

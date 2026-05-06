@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:note/Nots_app/screens/Fav_Note.dart';
-
-import 'Mynot_Screen.dart';
+import 'package:note/Nots_app/screens/fav_note.dart';
+import '../models/login_models.dart';
+import 'mynot_screen.dart';
+import 'setting_screen.dart';
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final LoginModels user;
+  const HomeScreen({super.key, required this.user});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -11,9 +13,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentindex=0;
-  final screens=[
+  late final screens=[
+
     MyNote(),
     FavNote(),
+    SettingScreen(user: widget.user),
+
+
+
+
 
   ];
   @override
@@ -33,8 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.favorite),
             label: 'Favorites',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.settings),
+              label: 'Settings',
+          )
         ],
       ),
+
+
 
 
 
