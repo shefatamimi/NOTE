@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note/Nots_app/screens/fav_note.dart';
+import 'package:note/Nots_app/screens/fav_note_screen.dart';
 import '../models/login_models.dart';
 import 'mynot_screen.dart';
 import 'setting_screen.dart';

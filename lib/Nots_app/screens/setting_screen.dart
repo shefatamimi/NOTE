@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:note/Nots_app/screens/privacy_policy_screen.dart';
 import '../models/login_models.dart';
 import '../service/Login_Service.dart';
 import 'about_app.dart';
-import 'edit_profile.dart';
+import 'edit_profile_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   final LoginModels user;
@@ -662,49 +663,60 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
                 SizedBox(height: 10,),
                 Center(
-                  child: Container(
-                    height: 50,
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PrivacyPolicy(),
+                        )
+                      );
+                    },
+
+                    child: Container(
+                      height: 50,
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 3),
+                            ),
+
+                          ]
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10,),
+                          Icon(Icons.privacy_tip ,size: 30,),
+
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 10,),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text('Privacy Policy',style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text('Read our privacy policy',style: TextStyle(
+                                    fontSize: 10,
+                                  ),),
+                                ),
+                              ]
                           ),
-
-                        ]
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 10,),
-                        Icon(Icons.privacy_tip ,size: 30,),
-
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 10,),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
-                                child: Text('Privacy Policy',style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
-                                child: Text('Read our privacy policy',style: TextStyle(
-                                  fontSize: 10,
-                                ),),
-                              ),
-                            ]
-                        ),
-                        SizedBox(width: 143,),
-                        Icon(Icons.arrow_forward_ios,size: 20),
-                      ],
+                          SizedBox(width: 143,),
+                          Icon(Icons.arrow_forward_ios,size: 20),
+                        ],
+                      ),
                     ),
                   ),
                 ),

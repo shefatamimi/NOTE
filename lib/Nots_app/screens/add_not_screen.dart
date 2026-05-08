@@ -54,7 +54,7 @@ class _AddnotesState extends State<Addnotes> {
       isCompleted: false,
     );
 
-    Navigator.pop(context, note); // 🔥 رجّع قبل الحفظ
+    Navigator.pop(context, note);
 
     await NoteService().createNots(note); // بعدين احفظ هاد كود الانسيرت للداتا بيز
   }
