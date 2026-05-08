@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../service/backup_service.dart';
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
 
@@ -137,7 +139,26 @@ class _BackupScreenState extends State<BackupScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: (){},
+                        onPressed: () async{
+                          try {
+                            final path = await BackupService.createBackup();
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Backup created successfully'),
+                              ),
+                            );
+
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Backup failed'),
+                              ),
+                            );
+                          }
+
+
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.teal,
                           shape: RoundedRectangleBorder(
@@ -269,7 +290,24 @@ class _BackupScreenState extends State<BackupScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: (){},
+                        onPressed: () async{
+                          try {
+                            await BackupService.restoreBackup();
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Restore completed successfully'),
+                              ),
+                            );
+
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Restore failed'),
+                              ),
+                            );
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.teal,
                           shape: RoundedRectangleBorder(

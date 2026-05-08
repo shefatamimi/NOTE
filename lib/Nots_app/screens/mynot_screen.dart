@@ -82,8 +82,8 @@ class _MyNoteState extends State<MyNote> {
             },
 
             icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const Icon(Icons.search,size: 20,),
+              padding: const EdgeInsets.only(right: 10),
+              child: const Icon(Icons.search,size: 35,),
             ),
           )
 
