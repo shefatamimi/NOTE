@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Favorites',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.settings),
-              label: 'Settings',
+            label: 'Settings',
           )
         ],
       ),

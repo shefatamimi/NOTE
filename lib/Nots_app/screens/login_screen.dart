@@ -64,8 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 190),
 
             Text('Login Her !',style: TextStyle(
-              fontSize: 40,
-              color: Colors.teal,
+                fontSize: 40,
+                color: Colors.teal,
                 shadows: [
                   Shadow(
                     offset: Offset(1, 1),
@@ -74,9 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
 
-              fontWeight: FontWeight.bold
+                fontWeight: FontWeight.bold
             ),
-        ),
+            ),
 
 
             const SizedBox(height: 20),
@@ -143,30 +143,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
               ), onPressed: () async {
-                if (emailController.text.isEmpty || passController.text.isEmpty)  {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please fill in all fields'),
-                        ),);
-                  return;
-                }
-                bool loginSuccess = await login();
-                if (loginSuccess) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>  HomeScreen(
-                        user: LoginModels(
-                          email: emailController.text,
-                          password: passController.text,
-                        ),
+              if (emailController.text.isEmpty || passController.text.isEmpty)  {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Please fill in all fields'),
+                  ),);
+                return;
+              }
+              bool loginSuccess = await login();
+              if (loginSuccess) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>  HomeScreen(
+                      user: LoginModels(
+                        email: emailController.text,
+                        password: passController.text,
                       ),
                     ),
-                  );
-                }
+                  ),
+                );
+              }
             }, child: const Text('Sign In',style: TextStyle(
-              color: Colors.black87,
-              fontSize: 20
+                color: Colors.black87,
+                fontSize: 20
             ),),
 
             ),
@@ -179,20 +179,20 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const Text('Not yet a member? ',style: TextStyle(color: Colors.black38,fontSize: 15),),
                 InkWell(child: const Text('sign up now',
-                    style: TextStyle(color: Colors.black87,fontSize: 15),
+                  style: TextStyle(color: Colors.black87,fontSize: 15),
 
                 ),
-                  onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RegesterScreen(
-                        email: emailController.text,
-                        password: passController.text,
-                        confirmPassword: passController.text,
-                    )
-                  ),);
-                  }
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegesterScreen(
+                              email: emailController.text,
+                              password: passController.text,
+                              confirmPassword: passController.text,
+                            )
+                        ),);
+                    }
                 ),
 
               ],

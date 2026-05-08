@@ -80,7 +80,7 @@ class _RegesterScreenState extends State<RegesterScreen> {
                   color: Colors.black38,
                   fontSize: 15
               ),),
-               SizedBox(height: 60),
+              SizedBox(height: 60),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
@@ -109,27 +109,27 @@ class _RegesterScreenState extends State<RegesterScreen> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: passController,
+                    controller: passController,
                     obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'password',
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: Colors.teal,
-                        width: 2.0,
-                      )
-                    ),
-                    enabledBorder: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      hintText: 'password',
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.teal,
+                            width: 2.0,
+                          )
+                      ),
+                      enabledBorder: OutlineInputBorder(
 
 
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
 
-                  )
+                    )
 
                 ),
               ),
@@ -137,24 +137,24 @@ class _RegesterScreenState extends State<RegesterScreen> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: confirmPassController,
+                    controller: confirmPassController,
                     obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'confirm password',
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: Colors.teal,
-                        width: 2.0,
-                      )
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                  )
+                    decoration: InputDecoration(
+                      hintText: 'confirm password',
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.teal,
+                            width: 2.0,
+                          )
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                    )
 
                 ),
               ),
@@ -174,22 +174,22 @@ class _RegesterScreenState extends State<RegesterScreen> {
                     fontSize: 20
                 ),),
                 onPressed: () async{
-                    bool success = await saveUser();
-                    if (success) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Registration successful'),
-                        ),
-                      );
-                      Navigator.pop(context);
-                    }
-                    else{
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Registration failed'),
-                        ),
-                      );
-                    }
+                  bool success = await saveUser();
+                  if (success) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Registration successful'),
+                      ),
+                    );
+                    Navigator.pop(context);
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Registration failed'),
+                      ),
+                    );
+                  }
 
                 },
 
@@ -197,23 +197,23 @@ class _RegesterScreenState extends State<RegesterScreen> {
               ),
               SizedBox(height: 40),
               InkWell(
-                child: Text('Already have an account?',style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 15
-                ),),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(
-                        key: Key('loginScreenKey'),
-                        title: 'Login',
-                        email: '',
-                        password: '',
+                  child: Text('Already have an account?',style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 15
+                  ),),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(
+                          key: Key('loginScreenKey'),
+                          title: 'Login',
+                          email: '',
+                          password: '',
+                        ),
                       ),
-                    ),
-                  );
-                }
+                    );
+                  }
               ),
 
             ],
