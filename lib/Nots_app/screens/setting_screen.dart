@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:note/Nots_app/screens/backup_screen.dart';
 import 'package:note/Nots_app/screens/privacy_policy_screen.dart';
+import 'package:note/Nots_app/service/note_service.dart';
 import '../models/login_models.dart';
+import '../models/note_models.dart';
 import '../service/Login_Service.dart';
 import 'about_app.dart';
 import 'edit_profile_screen.dart';
@@ -19,6 +21,26 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   bool isDarkMode = false;
+  final List<NoteModels> notes = [];
+
+  Future<void> loadNotes() async {
+    final data = await NoteService().getNots();
+    setState(() {
+      notes.clear();
+      notes.addAll(data);
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    loadNotes();
+  }
+
+  Future<void> deleteNote(NoteModels note) async {
+    await NoteService().deleteAllNotes();
+    loadNotes();
+  }
+
 
 
 
@@ -34,11 +56,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
     Navigator.pop(context, updated);
   }
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +74,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
               children: [
                 SizedBox(height: 10,),
-
-
                 Center(
                   child: Container(
                     height: 75,
@@ -546,8 +561,12 @@ class _SettingScreenState extends State<SettingScreen> {
                                 child: Text('Cancel'),
                               ),
                               TextButton(
-                                onPressed: () {
+                                onPressed: () async {
+                                  await NoteService().deleteAllNotes(
+
+                                  );
                                   Navigator.pop(context);
+
                                 },
                                 child: Text('Delete'),
                               ),

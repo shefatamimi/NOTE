@@ -21,7 +21,7 @@ class BackupService {
       final dir = await getApplicationDocumentsDirectory();
       String backupPath = '${dir.path}/backup_notes.db';
 
-      await dbFile.copy(backupPath);
+      await dbFile.copy(backupPath);//هون اخت النسخه وسيفتها
 
       return backupPath;
     } catch (e) {
