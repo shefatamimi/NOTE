@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note/Nots_app/screens/add_not_screen.dart';
 import 'package:note/Nots_app/screens/Single_Note.dart';
+import '../../Core/Utils/shared_prefernce.dart';
 import '../models/note_models.dart';
 import '../service/note_service.dart';
 import 'fav_note_screen.dart';
@@ -32,11 +33,20 @@ class _MyNoteState extends State<MyNote> {
     await NoteService().updateNots(note);
   }
 
+
   Future<void> loadNotes() async {
     final data = await NoteService().getNots();
+    final sortType = await AppSharedPreferences.getSortType();
+
     setState(() {
       notes.clear();
       notes.addAll(data);
+      if (sortType == "name") {
+        notes.sort((a, b) => a.title.compareTo(b.title));
+      }
+      else if (sortType == "date") {
+        notes.sort((a, b) => b.date!.compareTo(a.date!));
+      }
     });
   }
 

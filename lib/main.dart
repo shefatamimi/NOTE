@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:note/Nots_app/screens/login_screen.dart';
 import 'package:note/Nots_app/screens/regester_screen.dart';
 
-void main() {
+import 'Core/Utils/shared_prefernce.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AppSharedPreferences.init();
   runApp(const MyApp());
 }
 
