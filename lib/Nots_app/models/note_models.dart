@@ -40,4 +40,15 @@ class NoteModels {
 
     );
   }
+
+  NoteModels copyWith({required bool isLocked}) {
+    return NoteModels(
+      id: id,
+      title: title,
+      description: description,
+      isCompleted: isCompleted,
+      date: date,
+      isFavorite: isFavorite,
+    );
+  }
 }

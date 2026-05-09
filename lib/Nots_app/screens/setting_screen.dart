@@ -4,6 +4,7 @@ import 'package:note/Nots_app/screens/mynot_screen.dart';
 import 'package:note/Nots_app/screens/privacy_policy_screen.dart';
 import 'package:note/Nots_app/service/note_service.dart';
 import '../../Core/Utils/shared_prefernce.dart';
+import '../../widget/class_lock.dart';
 import '../models/login_models.dart';
 import '../models/note_models.dart';
 import '../service/Login_Service.dart';
@@ -412,53 +413,67 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
                 SizedBox(height: 10,),
                 Center(
-                  child: Container(
-                    height: 50,
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3),
-                          ),
-
-                        ]
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 10,),
-                        Icon(Icons.favorite, size: 30,),
-
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 10,),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8),
-                                child: Text(
-                                  'Favourites Setting', style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8),
-                                child: Text(
-                                  'Mange your favourites', style: TextStyle(
-                                  fontSize: 10,
-                                ),),
-                              ),
-                            ]
+                  child: InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                         ),
-                        SizedBox(width: 125,),
-                        Icon(Icons.arrow_forward_ios, size: 20),
-                      ],
+                        builder: (context) {
+                          return LockNotesBottomSheet(notesList: notes,);
+                        },
+                      );
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 3),
+                            ),
+
+                          ]
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10,),
+                          Icon(Icons.lock, size: 30,),
+
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 10,),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8),
+                                  child: Text(
+                                    'Locked Notes', style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8),
+                                  child: Text(
+                                    'Manage your locked notes', style: TextStyle(
+                                    fontSize: 10,
+                                  ),),
+                                ),
+                              ]
+                          ),
+                          SizedBox(width: 135,),
+                          Icon(Icons.arrow_forward_ios, size: 20),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -473,7 +488,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           actions: [
                             TextButton(
                               onPressed: () async {
-                                await AppSharedPreferences.saveSortType("date");
+                                await AppSharedPreferences.setSortType("date");
 
                                 Navigator.pop(context,true);
                               },
@@ -481,7 +496,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             ),
                             TextButton(
                               onPressed: () async {
-                                await AppSharedPreferences.saveSortType("name");
+                                await AppSharedPreferences.setSortType("name");
 
                                 Navigator.pop(context,true);
                               },

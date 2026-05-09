@@ -43,13 +43,10 @@ class AppSharedPreferences {
   static Future<void> setSortType(String type) async {
     await _prefs.setString('sortType', type);
   }
-
+//هون الافتراضي بكون مرتب حسب الديت من الاحدث للاقدم
   static String getSortType() {
     return _prefs.getString('sortType') ?? 'date';
   }
 
-  static Future<void> saveSortType(String s) async {
-    await _prefs.setString('sortType', s);
 
-  }
 }
