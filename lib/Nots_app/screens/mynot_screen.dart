@@ -132,6 +132,8 @@ class _MyNoteState extends State<MyNote> {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
+
+
                 subtitle: Text(note.description,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -178,7 +180,64 @@ class _MyNoteState extends State<MyNote> {
 
                   IconButton(
                     icon: const Icon(Icons.delete),
-                    onPressed: () => deleteNote(note),
+                    onPressed: () =>
+                    showDialog(context: context, builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Delete Note'),
+                        content: const Text('Are you sure you want to delete this note?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              deleteNote(note);
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Delete'),
+                          ),
+                        ],
+                      );
+
+          }
+          ),
+
+                  ),
+
+                  IconButton(
+                    icon: Icon(Icons.lock,
+                    ),
+                    onPressed: () =>
+                        showDialog(context: context, builder: (context) {
+                          return AlertDialog(
+                            title: Text('Enter Password'),
+                            content: TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: 'Password',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Unlock'),
+                              ),
+                            ],
+                          );
+                        },
+                        ),
                   ),
 
                 ],

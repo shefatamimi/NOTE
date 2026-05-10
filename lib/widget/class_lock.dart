@@ -33,7 +33,7 @@ class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
-        top: 20,
+          top: 20,
         left: 16,
         right: 16,
       ),
@@ -89,7 +89,8 @@ class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+
                 List<NoteModels> lockedNotes = [];
 
                 for (int i = 0; i < widget.notesList.length; i++) {
@@ -99,6 +100,46 @@ class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
                     );
                   }
                 }
+
+                TextEditingController passwordController =
+                TextEditingController();
+
+                await showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("🔐 Enter Password"),
+
+                      content: TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+
+                      actions: [
+
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Cancel"),
+                        ),
+
+                        ElevatedButton(
+                          onPressed: () {
+
+
+                            Navigator.pop(context);
+                          },
+                          child: Text("Lock"),
+                        ),
+                      ],
+                    );
+                  },
+                );
 
                 Navigator.pop(context, lockedNotes);
               },
