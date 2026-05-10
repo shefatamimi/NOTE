@@ -30,7 +30,8 @@ class DatabaseHelper {
       description TEXT,
       isCompleted INTEGER,
       date TEXT,
-      isFavorite INTEGER
+      isFavorite INTEGER,
+      isLocked INTEGER
       )
     ''');
     await db.execute('''

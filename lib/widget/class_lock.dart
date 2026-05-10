@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../Core/Utils/shared_prefernce.dart';
 import '../Nots_app/models/note_models.dart';
+import '../Nots_app/service/note_service.dart';
 
 class LockNotesBottomSheet extends StatefulWidget {
   final List<NoteModels> notesList;
@@ -15,6 +17,13 @@ class LockNotesBottomSheet extends StatefulWidget {
 
 class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
   late List<bool> selected;
+  bool isLocked = false;
+  final List<NoteModels> notes = [];
+  final List<NoteModels> lockedNotes = [];
+
+
+
+
 
   @override
   void initState() {
@@ -93,14 +102,6 @@ class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
 
                 List<NoteModels> lockedNotes = [];
 
-                for (int i = 0; i < widget.notesList.length; i++) {
-                  if (selected[i]) {
-                    lockedNotes.add(
-                      widget.notesList[i].copyWith(isLocked: true),
-                    );
-                  }
-                }
-
                 TextEditingController passwordController =
                 TextEditingController();
 
@@ -129,10 +130,21 @@ class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
                         ),
 
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            String password = passwordController.text;
+                           await AppSharedPreferences.savePassword(password);
+                            for (int i = 0; i < widget.notesList.length; i++) {
+                              if (selected[i]) {
+                                lockedNotes.add(
+                                  widget.notesList[i].copyWith(isLocked: true),
+                                );
+                                NoteService().updateNots(lockedNotes[i]);
+                              }
+                            }
 
 
-                            Navigator.pop(context);
+
+                            Navigator.pop(context, lockedNotes);
                           },
                           child: Text("Lock"),
                         ),

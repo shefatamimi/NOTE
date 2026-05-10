@@ -24,6 +24,8 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   bool isDarkMode = false;
+  bool isLocked = false;
+
   final List<NoteModels> notes = [];
 
   Future<void> loadNotesAndApplySort() async {
@@ -423,6 +425,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                         builder: (context) {
                           return LockNotesBottomSheet(notesList: notes,);
+
                         },
                       );
                     },

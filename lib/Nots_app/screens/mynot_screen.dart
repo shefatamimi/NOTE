@@ -12,23 +12,32 @@ class MyNote extends StatefulWidget {
 
   @override
   State<MyNote> createState() => _MyNoteState();
+
 }
 
 class _MyNoteState extends State<MyNote> {
   final List<NoteModels> notes = [];
+
   late var star_icon_color=Colors.grey;
+  String? savedPass;
+  final TextEditingController passwordController = TextEditingController();
 
 
-
-
+  Future<void> loadPassword() async {
+    savedPass = await AppSharedPreferences.getPassword();
+    setState(() {});
+  }
   @override
   void initState() {
     super.initState();
     loadNotes();
+    loadPassword();
+
   }
   Future<void>Changecolor(NoteModels note) async {
     setState(() {
       note.isFavorite = !note.isFavorite;
+
     });
     await NoteService().updateNots(note);
   }
@@ -84,7 +93,8 @@ class _MyNoteState extends State<MyNote> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: ()  async{
+              final pass = await AppSharedPreferences.getPassword();
               showSearch(
                 context: context,
                 delegate: NoteSearchDelegate(notes),
@@ -140,17 +150,25 @@ class _MyNoteState extends State<MyNote> {
 
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => SingleNote(
-                        title: note.title,
-                        description: note.description,
-                        selectedDate: note.date ?? DateTime.now(),
+                  if (note.isLocked ==false) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            SingleNote(
+                              title: note.title,
+                              description: note.description,
+                              selectedDate: note.date ?? DateTime.now(),
+                            ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('This Note is Locked'))
+                    );
+                  }
+                }
               ),
               SizedBox(height: 8),
               Row(
@@ -161,21 +179,78 @@ class _MyNoteState extends State<MyNote> {
                     icon: Icon(Icons.favorite,color: note.isFavorite?Colors.red:Colors.grey,),
                     onPressed: () => Changecolor(note),
 
-                  ),
-                  IconButton(
+                  ),IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => EditNot(note: note),
-                        ),
-                      );
+                      if (note.isLocked == false) {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => EditNot(note: note),
+                          ),
+                        );
 
-                      if (result != null) {
-                        loadNotes();
+                        if (result != null) {
+                          loadNotes();
+                        }
                       }
-                    },
+                      else {
+                        List<NoteModels> lockedNotes = [];
+
+                        TextEditingController passwordController =
+                        TextEditingController();
+
+
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: Text("Enter Password"),
+                              content: TextField(
+                                controller: passwordController,
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  hintText: 'Password',
+                                  border: OutlineInputBorder(),
+                                  prefixIcon: Icon(Icons.lock),
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Cancel"),
+                                ),
+                                TextButton(
+                                  onPressed: () async{
+                                    final savedPass = await AppSharedPreferences.getPassword();
+
+                                    if ((savedPass ?? '') == passwordController.text) {
+                                      Navigator.pop(context);
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => EditNot(note:note
+
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text("Wrong password"),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: Text("Unlock"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }
                   ),
 
                   IconButton(
@@ -206,7 +281,7 @@ class _MyNoteState extends State<MyNote> {
           ),
 
                   ),
-
+                  if (note.isLocked)
                   IconButton(
                     icon: Icon(Icons.lock,
                     ),
@@ -215,6 +290,7 @@ class _MyNoteState extends State<MyNote> {
                           return AlertDialog(
                             title: Text('Enter Password'),
                             content: TextField(
+                              controller: passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
                                 hintText: 'Password',
@@ -230,8 +306,25 @@ class _MyNoteState extends State<MyNote> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
-                                },
+                                  if ((savedPass ?? '') == passwordController.text){
+                                    setState(() {
+                                      note.isLocked=false;
+                                    });
+
+                                    Navigator.pop(context);
+                                    passwordController.clear();
+
+                                  }
+                                  else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content:Text('Wrong password '))
+
+                                    );
+                                  };
+
+
+
+                                  },
                                 child: Text('Unlock'),
                               ),
                             ],
@@ -255,10 +348,13 @@ class _MyNoteState extends State<MyNote> {
 class NoteSearchDelegate extends SearchDelegate<NoteModels?> {
   final List<NoteModels> notes;
 
-  NoteSearchDelegate(this.notes);
+
+
+  NoteSearchDelegate(this.notes,);
 // clear button
   @override
   List<Widget>? buildActions(BuildContext context) {
+
     return [
       IconButton(
         icon: const Icon(Icons.clear),
@@ -267,6 +363,7 @@ class NoteSearchDelegate extends SearchDelegate<NoteModels?> {
         },
       ),
     ];
+
   }
 // arrow back button
   @override
@@ -298,16 +395,75 @@ class NoteSearchDelegate extends SearchDelegate<NoteModels?> {
           title: Text(note.title),
           subtitle: Text(note.description),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => SingleNote(
-                  title: note.title,
-                  description: note.description,
-                  selectedDate: note.date ?? DateTime.now(),
+            if (note.isLocked == false) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => SingleNote(
+                    title: note.title,
+                    description: note.description,
+                    selectedDate: note.date ?? DateTime.now(),
+                  ),
                 ),
-              ),
-            );
+              );
+            } else {
+              List<NoteModels> lockedNotes = [];
+
+              TextEditingController passwordController =
+              TextEditingController();
+
+
+              showDialog(
+                context: context,
+                builder: (_) {
+                  return AlertDialog(
+                    title: Text("Enter Password"),
+                    content: TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.lock),
+                    ),
+                  ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Cancel"),
+                      ),
+                      TextButton(
+                        onPressed: () async{
+                          final savedPass = await AppSharedPreferences.getPassword();
+
+                          if ((savedPass ?? '') == passwordController.text) {
+                            Navigator.pop(context);
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => SingleNote(
+                                  title: note.title,
+                                  description: note.description,
+                                  selectedDate: note.date ?? DateTime.now(),
+                                ),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Wrong password"),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text("Unlock"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           },
         );
       },

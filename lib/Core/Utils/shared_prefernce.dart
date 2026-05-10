@@ -48,5 +48,13 @@ class AppSharedPreferences {
     return _prefs.getString('sortType') ?? 'date';
   }
 
+  static Future<void> savePassword(String password) async {
+    await _prefs.setString('password', password);
+  }
+  static String? getPassword() {
+    return _prefs.getString('password') ;
+  }
+
+
 
 }
