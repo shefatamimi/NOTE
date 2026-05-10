@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:note/Nots_app/screens/single_note.dart';
 
+import '../../Core/Utils/shared_prefernce.dart';
 import '../models/note_models.dart';
 import '../service/note_service.dart';
+import 'Edit_Not_Screen.dart';
+
 class FavNote extends StatefulWidget {
   const FavNote({super.key});
 
@@ -30,7 +33,6 @@ class _FavNoteState extends State<FavNote> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,29 +46,88 @@ class _FavNoteState extends State<FavNote> {
         separatorBuilder: (_, __) => const Divider(color: Colors.grey),
         itemBuilder: (context, index) {
           final note = notes[index];
+
           return ListTile(
-            title: Text(note.title,
+            title: Text(
+              note.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            subtitle: Text(note.description,
+            subtitle: Text(
+              note.description,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) =>
-                        SingleNote(
-                          title: note.title,
-                          description: note.description,
-                          selectedDate: note.date ?? DateTime.now(),
-                        )
+              if (note.isLocked == false) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => SingleNote(
+                      title: note.title,
+                      description: note.description,
+                      selectedDate: note.date ?? DateTime.now(),
+                    ),
+                  ),
+                );
+              } else {
+                final TextEditingController passwordController =
+                TextEditingController();
 
-                ),
-              );
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Text("Enter Password"),
+                      content: TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Password',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.lock),
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            final savedPass =
+                            AppSharedPreferences.getPassword();
+
+                            if ((savedPass ?? '') ==
+                                passwordController.text) {
+                              Navigator.pop(context);
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>  SingleNote(
+                                    title: note.title,
+                                    description: note.description,
+                                    selectedDate: note.date ?? DateTime.now(),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Wrong password"),
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text("Unlock"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
           );
         },
