@@ -410,8 +410,6 @@ class NoteSearchDelegate extends SearchDelegate<NoteModels?> {
 
               TextEditingController passwordController =
               TextEditingController();
-
-
               showDialog(
                 context: context,
                 builder: (_) {
