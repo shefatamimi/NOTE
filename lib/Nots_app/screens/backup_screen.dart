@@ -130,7 +130,7 @@ class _BackupScreenState extends State<BackupScreen> {
                      ),
                     Padding(
                       padding: const EdgeInsets.only(top: 15,right: 30),
-                      child: Text('Last Backup : Never',style: TextStyle(
+                      child: Text('No Backup Created',style: TextStyle(
                         fontSize: 12,
 
                         color: Colors.black45,

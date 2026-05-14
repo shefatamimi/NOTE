@@ -54,11 +54,7 @@ class _FavNoteState extends State<FavNote> {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            subtitle: Text(
-              note.description,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
+
             onTap: () {
               if (note.isLocked == false) {
                 Navigator.push(
@@ -66,8 +62,8 @@ class _FavNoteState extends State<FavNote> {
                   MaterialPageRoute(
                     builder: (_) => SingleNote(
                       title: note.title,
-                      description: note.description,
                       selectedDate: note.date ?? DateTime.now(),
+                      description: note.description,
                     ),
                   ),
                 );
