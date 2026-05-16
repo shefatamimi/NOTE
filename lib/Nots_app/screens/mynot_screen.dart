@@ -144,10 +144,15 @@ class _MyNoteState extends State<MyNote> {
                   ),
 
 
-                  subtitle: Text(note.description,
+
+                  subtitle:
+                  Text(
+                    note.isLocked == false?
+                    note.description:
+                    "This Note is Locked",
+                    style: const TextStyle(fontSize: 14),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-
                   ),
                   onTap: () {
                     if (note.isLocked ==false) {
@@ -178,7 +183,6 @@ class _MyNoteState extends State<MyNote> {
                   IconButton(
                     icon: Icon(Icons.favorite,color: note.isFavorite?Colors.red:Colors.grey,),
                     onPressed: () => Changecolor(note),
-
                   ),IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () async {

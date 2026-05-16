@@ -44,10 +44,7 @@ class _RegesterScreenState extends State<RegesterScreen> {
     final email = emailController.text;
     final password = passController.text;
 
-    final user = LoginModels(
-      email: email,
-      password: password,
-    );
+    final user = LoginModels(email: email, password: password,);
 
     final result = await LoginService().createLogin(user);
     return result > 0;

@@ -51,7 +51,6 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.teal,
         title: const Text('Edit Profile'),
@@ -274,12 +273,12 @@ class _EditProfileState extends State<EditProfile> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => LoginScreen(
-                          title: 'Login',
+                          title: '',
                           email: '',
                           password: '',
                         ),
                       ),
-                          (route) => false,
+                          (route) => true,
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

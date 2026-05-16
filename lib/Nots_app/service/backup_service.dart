@@ -17,6 +17,8 @@ class BackupService {
       if (!await dbFile.exists()) {
         throw Exception("Database file not found");
       }
+      // dir.path=>ملف الي رح ينحفظ فيه
+      //backup_notes.db=> اسم الورقه الي رح تكون نسخه احتياطيه
 
       final dir = await getApplicationDocumentsDirectory();
       String backupPath = '${dir.path}/backup_notes.db';
@@ -35,7 +37,8 @@ class BackupService {
       final db = await DatabaseHelper.instance.database;
 
       String dbPath = db.path;
-
+// dir.path=>ملف الي رح ينحفظ فيه
+      //backup_notes.db=> اسم الورقه الي رح تكون نسخه احتياطيه
       final dir = await getApplicationDocumentsDirectory();
       String backupPath = '${dir.path}/backup_notes.db';
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../service/backup_service.dart';
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
@@ -70,8 +69,6 @@ class _BackupScreenState extends State<BackupScreen> {
                     padding: const EdgeInsets.only(top: 40,right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-
-
                       children: [
                         Text('Create Backup',style: TextStyle(
                           fontSize: 15,

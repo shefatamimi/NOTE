@@ -54,6 +54,15 @@ class _FavNoteState extends State<FavNote> {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
+            subtitle: Text(
+              note.isLocked == false?
+              note.description:
+                  "This Note is Locked",
+              style: const TextStyle(fontSize: 14),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+
 
             onTap: () {
               if (note.isLocked == false) {
@@ -92,11 +101,9 @@ class _FavNoteState extends State<FavNote> {
                         ),
                         TextButton(
                           onPressed: () async {
-                            final savedPass =
-                            AppSharedPreferences.getPassword();
+                            final savedPass = AppSharedPreferences.getPassword();
 
-                            if ((savedPass ?? '') ==
-                                passwordController.text) {
+                            if ((savedPass) == passwordController.text) {
                               Navigator.pop(context);
 
                               Navigator.push(
