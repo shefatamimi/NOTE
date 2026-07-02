@@ -4,7 +4,7 @@ import '../service/Login_Service.dart';
 import 'login_screen.dart';
 
 class RegesterScreen extends StatefulWidget {
-  RegesterScreen({super.key, required this.email, required this.password, required this.confirmPassword});
+  const RegesterScreen({super.key, required this.email, required this.password, required this.confirmPassword});
 
   @override
   State<RegesterScreen> createState() => _RegesterScreenState();
@@ -12,12 +12,8 @@ class RegesterScreen extends StatefulWidget {
   final String password;
   final String confirmPassword;
 }
-class _RegesterScreenState extends State<RegesterScreen> {
-  @override
-  void initState() {
-    super.initState();
 
-  }
+class _RegesterScreenState extends State<RegesterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
@@ -25,203 +21,164 @@ class _RegesterScreenState extends State<RegesterScreen> {
   Future<bool> saveUser() async {
     if (passController.text != confirmPassController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Passwords do not match'),
-
-        ),
+        const SnackBar(content: Text('Passwords do not match')),
       );
       return false;
     }
-    if (emailController.text.isEmpty || passController.text.isEmpty
-        || confirmPassController.text.isEmpty) {
+    if (emailController.text.isEmpty || passController.text.isEmpty || confirmPassController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill in all fields'),
-        ),
+        const SnackBar(content: Text('Please fill in all fields')),
       );
       return false;
     }
     final email = emailController.text;
     final password = passController.text;
 
-    final user = LoginModels(email: email, password: password,);
-
+    final user = LoginModels(email: email, password: password);
     final result = await LoginService().createLogin(user);
     return result > 0;
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Regester',style: TextStyle(
-            color: Colors.black54,
-            fontSize: 20
-        ),
-        ),
+        title: const Text('Register'),
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
-      body:
-      SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
               const SizedBox(height: 80),
-              Text('Create Account',style: TextStyle(fontSize: 30,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold),
+              Text(
+                'Create Account',
+                style: TextStyle(
+                  fontSize: 30,
+                  color: theme.textTheme.headlineMedium?.color ?? Colors.teal,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              SizedBox(height: 20),
-              Text("Create an account to start saving\nand organizing your notes easily",style: TextStyle(
-                  color: Colors.black38,
-                  fontSize: 15
-              ),),
-              SizedBox(height: 60),
+              const SizedBox(height: 20),
+              Text(
+                "Create an account to start saving\nand organizing your notes easily",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: theme.textTheme.bodySmall?.color, fontSize: 15),
+              ),
+              const SizedBox(height: 60),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'email',
+                    hintText: 'Email',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: Colors.teal,
-                        width: 2.0,
-                      ),
+                      borderSide: const BorderSide(color: Colors.teal, width: 2.0),
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: theme.cardColor,
                   ),
-
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                    controller: passController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'password',
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.teal,
-                            width: 2.0,
-                          )
-                      ),
-                      enabledBorder: OutlineInputBorder(
-
-
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-
-                    )
-
+                  controller: passController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.teal, width: 2.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: theme.cardColor,
+                  ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                    controller: confirmPassController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'confirm password',
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.teal,
-                            width: 2.0,
-                          )
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    )
-
+                  controller: confirmPassController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Confirm password',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.teal, width: 2.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: theme.cardColor,
+                  ),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               ElevatedButton(
-                key: Key('registerButtonKey'),
+                key: const Key('registerButtonKey'),
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(200, 50),
+                  minimumSize: const Size(200, 50),
                   backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-
-                child: const Text('Register',style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 20
-                ),),
-                onPressed: () async{
+                onPressed: () async {
                   bool success = await saveUser();
                   if (success) {
+                    if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Registration successful'),
-                      ),
+                      const SnackBar(content: Text('Registration successful')),
                     );
                     Navigator.pop(context);
                   }
-                  else{
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Registration failed'),
-                      ),
-                    );
-                  }
-
                 },
-
-
+                child: const Text(
+                  'Register',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               InkWell(
-                  child: Text('Already have an account?',style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 15
-                  ),),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(
-                          key: Key('loginScreenKey'),
-                          title: 'Login',
-                          email: '',
-                          password: '',
-                        ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(
+                        key: Key('loginScreenKey'),
+                        title: 'Login',
+                        email: '',
+                        password: '',
                       ),
-                    );
-                  }
+                    ),
+                  );
+                },
+                child: Text(
+                  'Already have an account?',
+                  style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontSize: 15),
+                ),
               ),
-
             ],
           ),
         ),
       ),
-
-
-
-
     );
-
   }
 }

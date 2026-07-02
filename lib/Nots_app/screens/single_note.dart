@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-class SingleNote extends StatefulWidget {
 
-  const SingleNote({super.key,
-    required this.title, required this.description, required this.selectedDate,
+class SingleNote extends StatefulWidget {
+  const SingleNote({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.selectedDate,
   });
 
   @override
@@ -12,24 +15,23 @@ class SingleNote extends StatefulWidget {
   final DateTime selectedDate;
 }
 
-
 class _SingleNoteState extends State<SingleNote> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: theme.scaffoldBackgroundColor,
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
           ),
-
-          title: Text('My Notes'),
+          title: const Text('My Notes'),
           centerTitle: true,
           backgroundColor: Colors.teal,
-          foregroundColor: Colors.black,
+          foregroundColor: Colors.white,
           elevation: 0,
         ),
         body: Padding(
@@ -37,35 +39,33 @@ class _SingleNoteState extends State<SingleNote> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 10,),
+                const SizedBox(height: 10),
                 Center(
-                  child: Text('${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}',
-                    style: TextStyle(color: Colors.black54,fontSize: 15),),
+                  child: Text(
+                    '${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}',
+                    style: TextStyle(color: theme.textTheme.bodySmall?.color, fontSize: 15),
+                  ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${widget.title}',style:
-                  TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                  child: Text(
+                    widget.title,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('${widget.description}'),
+                const Divider(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        widget.description,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
                 ),
-
-
-
-
-              ]
-
-
-
-          ),
-        )
-
-
-    );
-
+              ]),
+        ));
   }
 }

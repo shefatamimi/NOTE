@@ -17,18 +17,14 @@ class LockNotesBottomSheet extends StatefulWidget {
 
 class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
   late List<bool> selected;
-  bool isLocked = false;
-  final List<NoteModels> notes = [];
-  final List<NoteModels> lockedNotes = [];
-
-
-
-
 
   @override
   void initState() {
     super.initState();
-    selected = List.generate(widget.notesList.length, (index) => false);
+    selected = List.generate(
+      widget.notesList.length, 
+      (index) => widget.notesList[index].isLocked
+    );
   }
 
   void toggleAll(bool value) {
@@ -39,49 +35,53 @@ class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final theme = Theme.of(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
-          top: 20,
+        top: 20,
         left: 16,
         right: 16,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-
-          Text(
-            "🔐 Select Notes to Lock",
+          const Text(
+            "🔐 Manage Locked Notes",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-
-          SizedBox(height: 10),
-
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
                 onPressed: () => toggleAll(true),
-                child: Text("Select All"),
+                child: const Text("Select All"),
               ),
               TextButton(
                 onPressed: () => toggleAll(false),
-                child: Text("Unselect All"),
+                child: const Text("Unselect All"),
               ),
             ],
           ),
-
-          Divider(),
-
+          const Divider(),
           Flexible(
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: widget.notesList.length,
               itemBuilder: (context, index) {
                 final note = widget.notesList[index];
-
                 return CheckboxListTile(
+                  activeColor: Colors.teal,
                   title: Text(note.title),
+                  subtitle: Text(
+                    note.isLocked ? "Currently Locked" : "Unlocked",
+                    style: TextStyle(fontSize: 12, color: theme.textTheme.bodySmall?.color),
+                  ),
                   value: selected[index],
                   onChanged: (value) {
                     setState(() {
@@ -92,74 +92,77 @@ class _LockNotesBottomSheetState extends State<LockNotesBottomSheet> {
               },
             ),
           ),
-
-          SizedBox(height: 10),
-
+          const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
+                foregroundColor: Colors.white,
+              ),
               onPressed: () async {
-
-                List<NoteModels> lockedNotes = [];
-
-                TextEditingController passwordController =
-                TextEditingController();
-
+                TextEditingController passwordController = TextEditingController();
+                
                 await showDialog(
                   context: context,
-                  builder: (context) {
+                  builder: (dialogContext) {
                     return AlertDialog(
-                      title: Text("🔐 Enter Password"),
-
+                      title: const Text("🔐 Confirm with Password"),
                       content: TextField(
                         controller: passwordController,
                         obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "Password",
+                        decoration: const InputDecoration(
+                          hintText: "Enter password to save changes",
                           border: OutlineInputBorder(),
                         ),
                       ),
-
                       actions: [
-
                         TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Cancel"),
+                          onPressed: () => Navigator.pop(dialogContext),
+                          child: const Text("Cancel"),
                         ),
-
                         ElevatedButton(
                           onPressed: () async {
                             String password = passwordController.text;
-                           await AppSharedPreferences.savePassword(password);
-                            for (int i = 0; i < widget.notesList.length; i++) {
-                              if (selected[i]) {
-                                lockedNotes.add(
-                                  widget.notesList[i].copyWith(isLocked: true),
+                            final savedPass = AppSharedPreferences.getPassword();
+
+                            // إذا كانت هناك كلمة مرور محفوظة، نتحقق منها أولاً
+                            if (savedPass != null && savedPass.isNotEmpty) {
+                              if (password != savedPass) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("Wrong password!")),
                                 );
-                                NoteService().updateNots(lockedNotes[i]);
+                                return;
                               }
+                            } else {
+                              // إذا لم يكن هناك باسورد، نقوم بحفظ المدخل كباسورد جديد
+                              await AppSharedPreferences.savePassword(password);
                             }
 
+                            // تحديث حالة كل الملاحظات بناءً على الاختيار الجديد
+                            for (int i = 0; i < widget.notesList.length; i++) {
+                              final updatedNote = widget.notesList[i].copyWith(
+                                isLocked: selected[i]
+                              );
+                              await NoteService().updateNots(updatedNote);
+                            }
 
-
-                            Navigator.pop(context, lockedNotes);
+                            if (context.mounted) {
+                              Navigator.pop(dialogContext); // إغلاق الديالوج
+                              Navigator.pop(context, true); // إغلاق القائمة السفلية
+                            }
                           },
-                          child: Text("Lock"),
+                          child: const Text("Save Changes"),
                         ),
                       ],
                     );
                   },
                 );
-
-                Navigator.pop(context, lockedNotes);
               },
-              child: Text("🔒 Lock Selected Notes"),
+              child: const Text("🔒 Apply Changes"),
             ),
           ),
-
-          SizedBox(height: 10),
+          const SizedBox(height: 20),
         ],
       ),
     );

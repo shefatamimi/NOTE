@@ -14,15 +14,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentindex=0;
   late final screens=[
-
     MyNote(),
     FavNote(),
     SettingScreen(user: widget.user),
-
-
-
-
-
   ];
   @override
   Widget build(BuildContext context) {

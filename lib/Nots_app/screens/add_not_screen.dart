@@ -54,65 +54,91 @@ class _AddnotesState extends State<Addnotes> {
       isCompleted: false,
     );
 
+    if (!mounted) return;
     Navigator.pop(context, note);
 
-    await NoteService().createNots(note); // بعدين احفظ هاد كود الانسيرت للداتا بيز
+    await NoteService().createNots(note); 
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: const Text('Add Note'),
         backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
       ),
-
-      body:
-      SingleChildScrollView(
-
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-
               TextField(
                 controller: titleController,
-                decoration: const InputDecoration(hintText: 'Title'),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                decoration: InputDecoration(
+                  hintText: 'Title',
+                  filled: true,
+                  fillColor: theme.cardColor,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
               ),
-
               const SizedBox(height: 20),
-
               TextField(
                 controller: descriptionController,
-                maxLines: 19,
-                decoration: const InputDecoration(hintText: 'Description',
+                maxLines: 15,
+                decoration: InputDecoration(
+                  hintText: 'Description',
+                  filled: true,
+                  fillColor: theme.cardColor,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
               InkWell(
                 onTap: () => _selectDate(context),
-                child: Text(
-                  '📅 ${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: theme.cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.calendar_month, color: Colors.teal),
+                      const SizedBox(width: 10),
+                      Text(
+                        '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-
-              const SizedBox(height: 25),
-
+              const SizedBox(height: 30),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(150, 50),
+                  minimumSize: const Size(double.infinity, 50),
                   backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 onPressed: saveNote,
-                child: const Text('Save',style: TextStyle(color: Colors.white),
-
+                child: const Text(
+                  'Save Note',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

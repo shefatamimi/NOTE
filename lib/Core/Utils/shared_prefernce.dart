@@ -39,11 +39,11 @@ class AppSharedPreferences {
     await _prefs.clear();
   }
 
-  // 👉 SORT TYPE (مهمتك)
+  // 👉 SORT TYPE
   static Future<void> setSortType(String type) async {
     await _prefs.setString('sortType', type);
   }
-//هون الافتراضي بكون مرتب حسب الديت من الاحدث للاقدم
+
   static String getSortType() {
     return _prefs.getString('sortType') ?? 'date';
   }
@@ -51,11 +51,17 @@ class AppSharedPreferences {
   static Future<void> savePassword(String password) async {
     await _prefs.setString('password', password);
   }
+
   static String? getPassword() {
-    return _prefs.getString('password') ;
+    return _prefs.getString('password');
   }
 
+  // 👉 THEME MODE
+  static Future<void> setThemeMode(bool isDark) async {
+    await _prefs.setBool('isDarkMode', isDark);
+  }
 
-
-
+  static bool getThemeMode() {
+    return _prefs.getBool('isDarkMode') ?? false;
+  }
 }
